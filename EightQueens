@@ -1,0 +1,105 @@
+public class EightQueens {
+
+    static {
+        System.out.println("*********************************");
+        System.out.println("     EIGHT QUEENS PUZZLE         ");
+        System.out.println("*********************************");
+        System.out.println("SPĒLES NOTEIKUMI:                ");
+        System.out.println("Eight queens puzzle uzdevums ir ievietot astoņas šaha karalienes uz 8 × 8 šaha dēļa tā, lai divas karalienes viena otru neapdraudētu. " + "\n" +
+                "Tādējādi risinājums prasa, lai divām karalienēm nebūtu viena un tā pati rinda, kolonna vai diagonāle.");
+        System.out.println();
+    }
+
+    /* Karalieņu skaits */
+    static int n = 8;
+    /* Variantu skaits */
+    static int k = 1;
+
+    /* Metode, lai izdrukātu risinājumu */
+    static void printSolution(int board[][]) {
+        System.out.println(k++ + ".variants");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++)
+                if (board[i][j] == 1)
+                    System.out.print("Q" + " ");
+                else
+                    System.out.print("*" + " ");
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    /* Metode, lai pārbaudītu, kur var novietot karalieni masīvā board[row][col].
+    Metode tiek izsaukta, kad karaliene ir jau ievietota kolonnā no 0 līdz -1.
+    Šādi tiek pārbaudīta tika masīva kreisajā pusē esošās karalienes */
+    static boolean isSafe(int board[][], int row, int col) {
+        int i;
+        int j;
+
+        /* Ridas pārbaude uz kreiso pusi */
+        for (i = 0; i < col; i++)
+            if (board[row][i] == 1)
+                return false;
+
+        /* Augšējās diagonāles pārbaude uz kreiso pusi */
+        for (i = row, j = col; i >= 0 && j >= 0; i--, j--)
+            if (board[i][j] == 1)
+                return false;
+
+        /* Apakšējās diagonāles pārbaude uz kreiso pusi */
+        for (i = row, j = col; j >= 0 && i < n; i++, j--)
+            if (board[i][j] == 1)
+                return false;
+
+        return true;
+    }
+
+    /* Metode, lai izpildītu risinājumu ar vairākām (šajā gadījumā n = 8) karalienēm. Metode tiek vairākkārt atkārtota. */
+    static boolean solveEightQueensUtil(int board[][], int col) {
+    /* Ja visas karalienes ir ievietotas tad atgriezt patiess (true) */
+        if (col == n) {
+            printSolution(board);
+            return true;
+        }
+        /* Attiecīgajā kolonnā mēģināt ievietot karalieni katrā rindā vienā pēc otras */
+        boolean result = false;
+        for (int i = 0; i < n; i++) {
+        /* Pārbaude vai karalieni ievietot masīvā board[i][col] */
+            if (isSafe(board, i, col)) {
+                /* Ievietot karalieni masīvā board[i][col] */
+                board[i][col] = 1;
+
+
+                /* Rezultāt ir patiess, ja kāds no karalienes novietojumiem ir iespējams */
+                result = solveEightQueensUtil(board, col + 1) || result;
+
+            /* Ja karalienes novietojums masīvā board[i][col] nav atbilstošs nosacījumiem, tad karaliene tiek izņemta no masīva board[i][col],
+            lai atgrieztos un uz metodes sākumu un mēģinātu ievietot karalieni citā rindā  */
+                board[i][col] = 0;
+            }
+        }
+
+    /* Ja karalieni nevar ievietot nevienā no rindām attiecīgajā kolonnā, tad tiek atgriezts nepatiess (false) */
+        return result;
+    }
+
+    /* Metode, lai atrisinātu uzdevumu ar vairākām (šajā gadījumā n = 8) karalienēm. Metode tiek vairākkārt atkārtota.
+    Tiek atgriezts nepatiess (false), ja karalieni nevar ievietot, bet pretējā gadījumā tiek atgriezts patiess (true)
+    un izdrukā karalieņu izvietotojumu metodē static void printSolution(int board[][]) norādītajā formā.
+    Metode izpilda un izdrukā visus karalieņu iespējamos izvietojumu variantus. */
+    static void solveEightQueen() {
+        int board[][] = new int[n][n];
+
+        if (solveEightQueensUtil(board, 0) == false) {
+            System.out.println("Risinājums nav atrasts!!!");
+            return;
+        }
+
+        return;
+    }
+
+    // Driver code
+    public static void main(String[] args) {
+        solveEightQueen();
+    }
+}
