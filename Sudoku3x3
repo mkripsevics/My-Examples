@@ -1,0 +1,138 @@
+import java.util.Scanner;
+
+public class Sudoku3x3 {
+
+    public static void main(String[] args) {
+
+        System.out.println("*********************************");
+        System.out.println("            SUDOKU               ");
+        System.out.println("          [X] [X] [X]            ");
+        System.out.println("          [X] [X] [X]            ");
+        System.out.println("          [X] [X] [X]            ");
+        System.out.println();
+        System.out.println("*********************************");
+        System.out.println("SPĒLES NOTEIKUMI:                ");
+        System.out.println("1. Spēles laukuma (masīva) izmērs 3x3");
+        System.out.println("2. Aizpildīt spēles laukumu (masīvu) izmantojot vienu reizi katru skaitli no 1 līdz 9");
+        System.out.println("3. Skaitļi nedrīkst atkārtoties");
+        System.out.println("4. Katrā rindā vai kolonnā esošo skaitļu summa ir vienāda ar pārējo rindu vai kolonnu visu skaitļu summu");
+        System.out.println();
+
+
+        Scanner ievade = new Scanner(System.in);
+        int[][] masivs = new int[3][3];
+
+        System.out.println("*********************************");
+        for (int i = 0; i < masivs.length; i++) {
+            for (int j = 0; j < masivs[0].length; j++) {
+                int r = i + 1;
+                int k = j + 1;
+                System.out.print("Lūdzu ievadiet " + r + ".rindas un " + k + ".kolonnas skaitli:" + "\t");
+                masivs[i][j] = ievade.nextInt();
+            }
+        }
+        System.out.println();
+
+        //  Tiek izvadītas ievadītās masīva vērtības
+
+        System.out.println("*********************************");
+        System.out.println("JŪSU IEVADĪTIE SKAITĻI!!!");
+
+//      Tiek pārbaudīts vai ievadīties skaitļi ir noteiktajā diapazonā
+
+        boolean LielaksMazaks = true;
+        for (int i = 0; i < masivs.length; i++) {
+            for (int j = 0; j < masivs[0].length; j++) {
+                System.out.print(masivs[i][j] + "\t");
+
+                if (masivs[i][j] <= 0) {
+                    LielaksMazaks = false;
+                }
+                if (masivs[i][j] > 9) {
+                    LielaksMazaks = false;
+                }
+            }
+            System.out.println();
+        }
+        if (LielaksMazaks == false) {
+            System.out.println();
+//            System.out.println("*********************************");
+//            System.out.println("SKAITĻI NAV IEVADĪTI ATBILSTOŠI NOTEIKUMIEM!!! 0>=x>9");
+        }
+
+        //      Tiek pārbaudīts vai vienā masīva rindā nav ievadīti divi vienādi skaitļi
+
+        boolean DoublecateInRow = true;
+        for (int i = 0; i < masivs.length; i++) {
+            for (int j = 0; j < masivs[0].length - 1; j++)
+                if (masivs[i][j] == masivs[i][j + 1]) {
+                    DoublecateInRow = false;
+                }
+        }
+        if (DoublecateInRow == false) {
+//            System.out.println("*********************************");
+//            System.out.println("SKAITĻI NAV IEVADĪTI ATBILSTOŠI NOTEIKUMIEM!!! DUPLICATE ROW");
+        }
+
+        //      Tiek pārbaudīts vai vienā masīva kolonnā nav ievadīti divi vienādi skaitļi
+
+        boolean DoublecateInColumn = true;
+        for (int i = 0; i < masivs[0].length - 1; i++) {
+            for (int j = 0; j < masivs.length; j++)
+                if (masivs[i][j] == masivs[i + 1][j]) {
+                    DoublecateInColumn = false;
+                }
+        }
+        if (DoublecateInColumn == false) {
+//            System.out.println("*********************************");
+//            System.out.println("SKAITĻI NAV IEVADĪTI ATBILSTOŠI NOTEIKUMIEM!!! DUPLICATE COL");
+        }
+
+        //      Tiek pārbaudīts vai visās masīva rindās summa ir vienāda ar 15
+
+        boolean amountRow = true;
+        for (int i = 0; i < masivs.length; i++) {
+            int sumRow = 0;
+            for (int j = 0; j < masivs[i].length; j++)
+                sumRow = sumRow + masivs[i][j];
+                if (sumRow != 15) {
+                    amountRow = false;
+                }
+        }
+        if (amountRow == false) {
+//            System.out.println("*********************************");
+//            System.out.println("SKAITĻI NAV IEVADĪTI ATBILSTOŠI NOTEIKUMIEM!!! ROW !=15");
+        }
+
+        //      Tiek pārbaudīts vai visās masīva kolonnā summa ir vienāda ar 15
+
+        boolean amountColumn = true;
+        for (int i = 0; i < masivs.length; i++) {
+            int sumColumn = 0;
+            for (int j = 0; j < masivs[i].length; j++)
+                sumColumn = sumColumn + masivs[i][j];
+                if (sumColumn != 15) {
+                amountColumn = false;
+            }
+        }
+        if (amountColumn == false) {
+//            System.out.println("*********************************");
+//            System.out.println("SKAITĻI NAV IEVADĪTI ATBILSTOŠI NOTEIKUMIEM!!! COLUMN !=15");
+        }
+        if (LielaksMazaks == false || DoublecateInRow == false || DoublecateInColumn == false || amountRow == false || amountColumn == false) {
+            System.out.println();
+            System.out.println("*********************************");
+            System.out.println("SPĒLE BEIGUSIES!!!");
+            System.out.println("DIEMŽĒL JŪS ZAUDĒJĀT!!!");
+            System.out.println("SĀCIET SPĒLI NO JAUNA!!!");
+        }
+        else {
+            System.out.println();
+            System.out.println("*********************************");
+            System.out.println("SPĒLE BEIGUSIES!!!");
+            System.out.println("APSVEICU, JŪS ESAT UZVARĒJIS!!!");
+
+        }
+
+    }
+}
