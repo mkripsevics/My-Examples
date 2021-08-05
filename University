@@ -1,0 +1,96 @@
+import java.util.Scanner;
+
+class University
+{
+    String university;
+    Scanner input = new Scanner(System.in);
+    void getDetails()
+    {
+        System.out.println("Informācija par universitāti");
+        System.out.println("Ievadiet universitātes nosaukumu:");
+        university = input.nextLine();
+    }
+    void showDetails()
+    {
+        System.out.println("1. INFORMĀCIJA PAR UNIVERSITĀTI");
+        System.out.println("1.1. Universitātes nosaukums: "+university);
+    }
+}
+
+class Student extends University
+{
+    String firstName;
+    String lastName;
+    int age;
+
+    void getDetails()
+    {
+        System.out.println("Informācija par studentu");
+        System.out.println("Ievadiet savu vārdu:");
+        firstName = input.nextLine();
+        System.out.println("Ievadiet savu uzvārdu:");
+        lastName = input.nextLine();
+        System.out.println("Ievadiet savu vecumu:");
+        age = input.nextInt();
+    }
+
+    void showDetails()
+    {
+        System.out.println("2. INFORMĀCIJA PAR STUDENTU");
+        System.out.println("2.1. Vārds: "+firstName);
+        System.out.println("2.2. Uzvārds: "+lastName);
+        System.out.println("2.3. Vecums: "+age);
+    }
+}
+
+class Course extends University
+{
+    String course;
+    void getDetails()
+    {
+        System.out.println("Informācija par kursiem");
+        System.out.println("Ievadiet kursu nosaukumu:");
+        course = input.nextLine();
+    }
+
+    void showDetails()
+    {
+        System.out.println("3. INFORMĀCIJA PAR KURSIEM");
+        System.out.println("3.1. Kursu nosaukums: "+course);
+    }
+}
+
+class Data
+{
+    public static void main(String args[])
+    {
+        University A = new University();
+        A.getDetails();
+
+        System.out.println();
+        University B = new Student();
+        B.getDetails();
+
+        System.out.println();
+        University C = new Course();
+        C.getDetails();
+
+
+        System.out.println();
+        System.out.println("************************************************************");
+        System.out.println("JŪSU IESNIEGTĀ INFORMĀCIJA");
+        System.out.println("************************************************************");
+
+
+        System.out.println();
+        A.showDetails();
+
+        System.out.println();
+        B.showDetails();
+
+        System.out.println();
+        C.showDetails();
+
+        System.out.println("************************************************************");
+    }
+}
